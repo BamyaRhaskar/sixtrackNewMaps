@@ -1,11 +1,15 @@
 /*  Implementing RF multipole, version 1...progress so far...
-    4 warniings generated in total
+    9 warniings generated in total with gcc on Mac OSX
 */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include "complex.h"
 
+// inputs given: n; R; KNn; L; vn; kRF; KSn; L; phin; x; y; psc
+    //first match python program output
+    //then manipulate current functions, with cos() and sin()
+    // to match equations 159-161.
 
 int factorial(int n)
 { //couldn't find an already defined factorial function
