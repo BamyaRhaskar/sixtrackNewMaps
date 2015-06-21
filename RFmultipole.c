@@ -41,10 +41,7 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize){
   float complex res = 0;
 
   for (int i = 0; i < polySize; i++){
-
-    printf("%f ", kn[i]);
-    printf("%f ", ks[i]);
-    printf("%d ", i);
+    
     res += (kn[i] + ((1.0*I)*ks[i]))*cpow(z , i)/factorial(i);
 
   }
