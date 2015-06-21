@@ -29,8 +29,7 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize){
 
   }
   float realdXdY [2] = {dpx, dpy};
-  printf("%f, %f ", realdXdY[0], realdXdY[1]);
-  printf("\n");
+  printf("(%f, %f ) ", realdXdY[0], realdXdY[1]);
 
   return realdXdY; // warning, OK: let memory be freed
 
@@ -42,13 +41,16 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize){
   float complex res = 0;
 
   for (int i = 0; i < polySize; i++){
-    res += cpow((kn[i] + (1.0*I)*ks[i]) , i)/factorial(i);
+
+    printf("%f ", kn[i]);
+    printf("%f ", ks[i]);
+    printf("%d ", i);
+    res += (kn[i] + ((1.0*I)*ks[i]))*cpow(z , i)/factorial(i);
 
   }
   float complexReal [2] = {creal(res), cimag(res)};
-  printf("%f, %f ", complexReal[0], complexReal[1]);
-  printf("\n");
-
+  printf("(%f, %f )\n", complexReal[0], complexReal[1]);
+  
   return complexReal; // warning, OK: let memory be freed
 
 } // end ztaylor
@@ -76,7 +78,7 @@ int main()
 
 
     }    
-    ctaylor(x, y, kn, kx, polySize);
+    ctaylor(x, y, kn, kx, i);
     ztaylor(x, y, knn, kxx, i);
 
 
