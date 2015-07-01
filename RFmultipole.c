@@ -1,7 +1,11 @@
 /*  Implementing RF multipole, version 1...progress so far...
-    2 warniings generated in total with gcc on Mac OSX
+    1 Error generated so far
 
-    Inputs given: n; R; KNn; L; vn; kRF; KSn; L; phin; x; y; psc
+    I just wanted to know if this interpretation makes any sense...
+
+    since dpx and dpy are already incorprated in the functions ctauler and ztaylor
+    would the only additions be just multipltying the kn and ks  vectors by the correct sine and cosine terms..?
+
     first match python program output
     then manipulate current functions, with cos() and sin()
     to match equations 159-161.
@@ -19,13 +23,13 @@ float factorial(int n)
 } // end factorial
 
 
-float * ctaylor(float x, float y, float kn[], float ks[], int polySize){
+float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n){
   float dpx = kn[polySize - 1];          
   float dpy = ks[polySize - 1];  
 
   for (int i = (polySize-2); i >= 0 ; i--){ 
-    dpx = kn[i] + (dpx*x - dpy*y)/((float)(i+1)); 
-    dpy = ks[i] + (dpx*y + dpy*x)/((float)(i+1)); 
+    dpx = kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1)); 
+    dpy = ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1)); 
 
   }
   float realdXdY [2] = {dpx, dpy};
@@ -36,19 +40,20 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize){
 } // end ctaylor
 
 
-float * ztaylor(float x, float y, float kn[], float ks[], int polySize){
+float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n){
   float complex z  = x + (1.0*I)*y; 
   float complex res = 0;
 
   for (int i = 0; i < polySize; i++){
     
-    res += (kn[i] + ((1.0*I)*ks[i]))*cpow(z , i)/factorial(i);
+    res += (kn[i]*L*cos(v_n - k_RF*zz) + ((1.0*I)*ks[i]*L*cos(phi_n - k_RF*zz)))*cpow(z , i)/factorial(i);
 
   }
   float complexReal [2] = {creal(res), cimag(res)};
   printf("(%f, %f )\n", complexReal[0], complexReal[1]);
   
-  return complexReal; // warning, OK: let memory be freed
+  // return complexReal[0]; // warning, OK: let memory be freed
+  return creal(res);
 
 } // end ztaylor
 
@@ -56,27 +61,30 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize){
  
 int main()
 {
-  float x = 2;
-  float y = 0;
-  float kn [5] = {1,3,3,4,1};
-  float kx [5] = {4,3,3,2,-4};
-  int polySize = 5;
+  float K_Nn [1] = {0}; 
+  float L;
+  float v_n;
+  float k_RF;
+  float complex z;
+  float K_Sn [1]  = {0};
+  float phi_n;
+  float x;
+  float y;
+  int n;
+  float complex sumTotal = 0;
 
-  ctaylor(x, y, kn, kx, polySize);
-  ztaylor(x, y, kn, kx, polySize);
+  z = z*I*1.0;
 
-  for(int i = 1; i < (polySize+1); i++){
-    float knn [i];
-    float kxx [i];
+  for (int i = 0; i <= n; i++){
 
-    for (int j =0; j < i; j++){
-      knn[j] = kn[j];
-      kxx[j] = kx[j];
+    float fact = factorial(i);
 
+    float sum =  ctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n);
+    // float complex sum = ztaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n)
 
-    }    
-    ctaylor(x, y, kn, kx, i);
-    ztaylor(x, y, knn, kxx, i);
+    sum = sum * fact;
+
+    sumTotal += sum;
 
 
   }
