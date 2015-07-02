@@ -28,8 +28,8 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L,
   float dpy = ks[polySize - 1];  
 
   for (int i = (polySize-2); i >= 0 ; i--){ 
-    dpx = (1/factorial(i))*(kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1))); 
-    dpy = (1/factorial(i))*(ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1))); 
+    dpx = kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1)); 
+    dpy = ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1)); 
 
   }
   float realdXdY [2] = {dpx, dpy};
@@ -40,41 +40,20 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L,
 } // end ctaylor
 
 
-// Hesistant about this until I know that the dpx and dpy make sense...
-// 
-// float * p_tctaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n, float v_RF){
-//   float dpx = kn[polySize - 1];          
-//   float dpy = ks[polySize - 1];  
-
-//   for (int i = (polySize-2); i >= 0 ; i--){ 
-//     dpx = kn[i]*L*sin(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1)); 
-//     dpy = ks[i]*L*sin(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1)); 
-
-//   }
-
-//   
-//   float realdXdY [2] = {dpx, dpy};
-//   printf("(%f, %f ) ", realdXdY[0], realdXdY[1]);
-
-//   return realdXdY; // warning, OK: let memory be freed
-
-// } // end ctaylor
-
-
 float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n){
   float complex z  = x + (1.0*I)*y; 
   float complex res = 0;
 
   for (int i = 0; i < polySize; i++){
     
-    res += (1/factorial(i))*((kn[i]*L*cos(v_n - k_RF*zz) + ((1.0*I)*ks[i]*L*cos(phi_n - k_RF*zz)))*cpow(z , i)/factorial(i));
+    res += (kn[i]*L*cos(v_n - k_RF*zz) + ((1.0*I)*ks[i]*L*cos(phi_n - k_RF*zz)))*cpow(z , i)/factorial(i);
 
   }
   float complexReal [2] = {creal(res), cimag(res)};
   printf("(%f, %f )\n", complexReal[0], complexReal[1]);
   
-  return complexReal; // warning, OK: let memory be freed
-  // return creal(res);
+  // return complexReal[0]; // warning, OK: let memory be freed
+  return creal(res);
 
 } // end ztaylor
 
@@ -82,13 +61,12 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L,
  
 int main()
 {
-  float K_Nn [5] = {1,3,3,4,1};
+  float K_Nn [1] = {0}; 
   float L;
   float v_n;
   float k_RF;
-  float v_RF;
   float complex z;
-  float K_Sn [5] = {4,3,3,2,-4};
+  float K_Sn [1]  = {0};
   float phi_n;
   float x;
   float y;
@@ -97,10 +75,16 @@ int main()
 
   z = z*I*1.0;
 
-  ctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n);
-  // ztaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n)
-  // p_tctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n, v_RF);
-    
+  float fact = factorial(i);
+
+  float sum =  ctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n);
+  // float complex sum = ztaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n)
+
+  sum = sum * fact;
+
+  sumTotal += sum;
+
+
 
 
   return 0;  
