@@ -42,23 +42,26 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L,
 
 // Hesistant about this until I know that the dpx and dpy make sense...
 // 
-// float * p_tctaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n, float v_RF){
-//   float dpx = kn[polySize - 1];          
-//   float dpy = ks[polySize - 1];  
+float * p_tctaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n, float v_RF, float q, float p_s, float c, float V_RF){
+  float dpx = kn[polySize - 1];          
+  float dpy = ks[polySize - 1];  
 
-//   for (int i = (polySize-2); i >= 0 ; i--){ 
-//     dpx = kn[i]*L*sin(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1)); 
-//     dpy = ks[i]*L*sin(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1)); 
+  for (int i = (polySize-2); i >= 0 ; i--){ 
+    dpx = kn[i]*L*sin(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1)); 
+    dpy = ks[i]*L*sin(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1)); 
 
-//   }
+  }
 
-//   
-//   float realdXdY [2] = {dpx, dpy};
-//   printf("(%f, %f ) ", realdXdY[0], realdXdY[1]);
+  float firstTerm = (q*V_RF/(p_s*c))*sin(v_RF -k_RF*zz);
+  dpy = firstTerm - k_RF*dpy;
+  dpx = firstTerm - k_RF*dpx;
 
-//   return realdXdY; // warning, OK: let memory be freed
+  float realdXdY [2] = {dpx, dpy};
+  printf("(%f, %f ) ", realdXdY[0], realdXdY[1]);
 
-// } // end ctaylor
+  return realdXdY; // warning, OK: let memory be freed
+
+} // end ctaylor
 
 
 float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n){
@@ -82,24 +85,30 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L,
  
 int main()
 {
-  float K_Nn [5] = {1,3,3,4,1};
-  float L;
-  float v_n;
-  float k_RF;
-  float v_RF;
+  // float K_Nn [5] = {1,3,3,4,1};
+  float K_Nn [5] = {0,1,2,3,4};
+  float L = 1;
+  float v_n = 1;
+  float k_RF = 1;
+  float v_RF = 1;
   float complex z;
-  float K_Sn [5] = {4,3,3,2,-4};
-  float phi_n;
-  float x;
-  float y;
-  int n;
+  // float K_Sn [5] = {4,3,3,2,-4};
+  float K_Sn [5] = {0,1,2,3,4};
+  float phi_n =1;
+  float x =1;
+  float y =1;
+  int n =1;
+  float q =1;
+  float p_s =1;
+  float c =1; 
+  float V_RF =1; 
   float complex sumTotal = 0;
 
   z = z*I*1.0;
 
   ctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n);
-  // ztaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n)
-  // p_tctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n, v_RF);
+  ztaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n);
+  p_tctaylor(x, y, K_Nn, K_Sn, n, L, v_n, k_RF, z, phi_n, v_RF, q, p_s, c, v_RF);
     
 
 
