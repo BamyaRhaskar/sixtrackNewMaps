@@ -86,14 +86,14 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L,
 int main()
 {
   // float K_Nn [5] = {1,3,3,4,1};
-  float K_Nn [5] = {0,1,2,3,4};
+  float K_Nn [5] = {4,3,2,1,0};
   float L = 1;
   float v_n = 1;
   float k_RF = 1;
   float v_RF = 1;
   float complex z;
   // float K_Sn [5] = {4,3,3,2,-4};
-  float K_Sn [5] = {0,1,2,3,4};
+  float K_Sn [5] = {4,3,2,1,0};
   float phi_n =1;
   float x =1;
   float y =1;
