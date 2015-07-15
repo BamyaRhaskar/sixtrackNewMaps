@@ -26,10 +26,12 @@ float factorial(int n)
 float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n){
   float dpx = kn[polySize - 1];          
   float dpy = ks[polySize - 1];  
+  float imagine;
 
   for (int i = (polySize-2); i >= 0 ; i--){ 
-    dpx = (1/factorial(i))*(kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1))); 
-    dpy = (1/factorial(i))*(ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1))); 
+    imagine = ((float)(i+1));
+    dpx = (1/factorial(i))*(kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/imagine; 
+    dpy = (1/factorial(i))*(ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/imagine; 
 
   }
   float realdXdY [2] = {dpx, dpy};
@@ -45,10 +47,12 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L,
 float * p_tctaylor(float x, float y, float kn[], float ks[], int polySize, float L, float v_n, float k_RF, float complex zz, float phi_n, float v_RF, float q, float p_s, float c, float V_RF){
   float dpx = kn[polySize - 1];          
   float dpy = ks[polySize - 1];  
+  float imagine;
 
   for (int i = (polySize-2); i >= 0 ; i--){ 
-    dpx = kn[i]*L*sin(v_n - k_RF*zz) + (dpx*x - dpy*y)/((float)(i+1)); 
-    dpy = ks[i]*L*sin(phi_n - k_RF*zz) + (dpx*y + dpy*x)/((float)(i+1)); 
+    imagine = ((float)(i+1));
+    dpx = kn[i]*L*sin(v_n - k_RF*zz) + (dpx*x - dpy*y)/imagine; 
+    dpy = ks[i]*L*sin(phi_n - k_RF*zz) + (dpx*y + dpy*x)/imagine; 
 
   }
 
