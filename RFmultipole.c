@@ -29,9 +29,9 @@ float * ctaylor(float x, float y, float kn[], float ks[], int polySize, float L,
   float imagine;
 
   for (int i = (polySize-2); i >= 0 ; i--){ 
-    imagine = ((float)(i+1));
-    dpx = (1/factorial(i))*(kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/imagine; 
-    dpy = (1/factorial(i))*(ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/imagine; 
+    imagine = (float)(i+1);
+    dpx = (1/factorial(i))*(kn[i]*L*cos(v_n - k_RF*zz) + (dpx*x - dpy*y)/imagine); 
+    dpy = (1/factorial(i))*(ks[i]*L*cos(phi_n - k_RF*zz) + (dpx*y + dpy*x)/imagine); 
 
   }
   float realdXdY [2] = {dpx, dpy};
@@ -50,7 +50,7 @@ float * p_tctaylor(float x, float y, float kn[], float ks[], int polySize, float
   float imagine;
 
   for (int i = (polySize-2); i >= 0 ; i--){ 
-    imagine = ((float)(i+1));
+    imagine = (float)(i+1);
     dpx = kn[i]*L*sin(v_n - k_RF*zz) + (dpx*x - dpy*y)/imagine; 
     dpy = ks[i]*L*sin(phi_n - k_RF*zz) + (dpx*y + dpy*x)/imagine; 
 
