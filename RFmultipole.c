@@ -1,11 +1,5 @@
-/*  Implementing RF multipole, version 1...progress so far...
-    1 Error generated so far
-
-    I just wanted to know if this interpretation makes any sense...
-
-    since dpx and dpy are already incorprated in the functions ctauler and ztaylor
-    would the only additions be just multipltying the kn and ks  vectors by the correct sine and cosine terms..?
-
+/*  Implementing RF multipole
+    
     first match python program output
     then manipulate current functions, with cos() and sin()
     to match equations 159-161.
@@ -90,15 +84,15 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L,
 int main()
 {
   // float K_Nn [5] = {1,3,3,4,1};
-  float K_Nn [5] = {4,3,2,1,0};
-  float L = 1;
+  float K_Nn [5] = {8,3,2,1,0};
+  float L = 3;
   float v_n = 1;
   float k_RF = 1;
   float v_RF = 1;
   float complex z;
   // float K_Sn [5] = {4,3,3,2,-4};
   float K_Sn [5] = {4,3,2,1,0};
-  float phi_n =1;
+  float phi_n =0;
   float x =1;
   float y =1;
   int n =1;
