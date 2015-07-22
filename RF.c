@@ -34,9 +34,11 @@ void taylor(float x, float y, float z, float kn[], float ks[], int polySize, flo
     realQuanitity = kn[n-1] * L * cos(v_n - k_RF*z); // real-valued portion of each Eqn, 166-168
     complex_powered = cpow((x + I*y), n); // complex-valued portion of each Eqn, 166-168
 
-    dpx = -(1/factorial(n))*(realQuanitity +  I*L*ks[n]*cos(phi_n - k_RF*z))*(complex_powered)+ dpx; // Eqn 166
-    dpy = (1/factorial(n))*(realQuanitity +  I*L*ks[n]*cos(phi_n - k_RF*z))*(complex_powered)+ dpy; // Eqn 167
-    dpt = (1/factorial(n))*(realQuanitity +  I*L*ks[n]*sin(phi_n - k_RF*z))*(complex_powered)+ dpt; // Eqn 168
+    dpx = -((realQuanitity +  I*L*ks[n]*cos(phi_n - k_RF*z))*(complex_powered)  + dpx) /n; // Eqn 166
+
+    dpy = ((realQuanitity +  I*L*ks[n]*cos(phi_n - k_RF*z))*(complex_powered) + dpy) / n; // Eqn 167
+
+    dpt = ((realQuanitity +  I*L*ks[n]*sin(phi_n - k_RF*z))*(complex_powered) + dpt)/ n; // Eqn 168
 
   }
   dpt = ((q*V_RF)/(ps*c))*sin(vrf - k_RF*z) - (k_RF * dpt) ; // Eqn 168 continued 
