@@ -84,7 +84,7 @@ float * ztaylor(float x, float y, float kn[], float ks[], int polySize, float L,
 int main()
 {
   // float K_Nn [5] = {1,3,3,4,1};
-  float K_Nn [5] = {8,3,2,1,0};
+  float K_Nn [5] = {4,3,2,1,0};
   float L = 3;
   float v_n = 1;
   float k_RF = 1;
