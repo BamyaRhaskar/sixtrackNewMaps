@@ -19,7 +19,7 @@ float factorial(int n)
 } // end factorial
 
 
-float * taylor(float x, float y, float z, float kn[], float ks[], int polySize, float L, float k_RF, float v_n, float phi_n, float q, float V_RF, float ps, float c, float vrf){
+void taylor(float x, float y, float z, float kn[], float ks[], int polySize, float L, float k_RF, float v_n, float phi_n, float q, float V_RF, float ps, float c, float vrf){
   float complex dpx = 0;          
   float complex dpy = 0; 
   float complex dpt = 0;
@@ -44,8 +44,6 @@ float * taylor(float x, float y, float z, float kn[], float ks[], int polySize, 
 
   printf("(%f, %f, %f ) ", deltapx, deltapy, deltapt);
 
-  return realdXdY; // warning, OK: let memory be freed
-
 } // end taylor
 
  
@@ -54,8 +52,8 @@ int main()
   float x = 1; 
   float y = 1;
   float z = 1;
-  float K_Nn = {4,3,2,1,0};
-  float K_Sn = {4,3,2,1,0};
+  float K_Nn[5] = {4,3,2,1,0};
+  float K_Sn[5] = {4,3,2,1,0};
   float polynomialMax = 5;
   float L = 1; 
   float k_RF = 1;
@@ -67,7 +65,7 @@ int main()
   float c = 1;
   float vrf = 1;
 
-  ctaylor(x, y, z, K_Nn, K_Sn, polynomialMax, L, k_RF, v_n, phi_n, q, V_RF, ps, c, vrf);
+  taylor(x, y, z, K_Nn, K_Sn, polynomialMax, L, k_RF, v_n, phi_n, q, V_RF, ps, c, vrf);
 
 
   return 0;  
