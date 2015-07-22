@@ -2,7 +2,8 @@
 
     Referencing Equations 166 - 168 from the revised Physics Manual
       Attempting to minimize prior three script of three seperate functions 
-      into 1 single function.
+      into 1 single function...did not edit/reinterpret the equations at all, when 
+      implementing them within this program. 
 
     No Errors generated so far...values kind of seem to look like they are 
     reasonable, but still need to test against a benchmark program. 
