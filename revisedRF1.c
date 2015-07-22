@@ -4,6 +4,8 @@
       Attempting to minimize prior three script of three seperate functions 
       into 1 single function.
 
+    No Errors generated so far...values kind of seem to look like they are 
+    reasonable, but still need to test against a benchmark program. 
 
 */
 
