@@ -1,4 +1,8 @@
-/*  Implementing Exact Bend, Equations 44-49 in SixTrack Physics Manual (Revised version)
+/*  Implementing Thick Dipole, Equations 44-49 in SixTrack Physics Manual (Revised version)
+
+	- I am not sure if this in fact is supposed to be exact bend, but I should have 
+	  clarified...I am using the explicit definitions in the Physics Manual. 
+
 */
 
 #include <stdio.h>
