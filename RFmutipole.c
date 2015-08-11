@@ -35,11 +35,11 @@ void taylor(float x, float y, float z, float kn[], float ks[], int polySize, flo
     zreal = pow( dpx*x - dpy*y, n); // real-valued portion of z
     zimag = pow( dpx*y + dpy*x, n); // complex-valued portion of z
 
-    dpx = -((Quanitity +  I*L*ks[n]*cos(phi_n - k_RF*z))*(zreal)  + dpx) /n; // Eqn 166
+    dpx = -((Quanitity +  L*ks[n]*cos(phi_n - k_RF*z))*(zreal)  + dpx) /n; // Eqn 166
 
-    dpy = ((Quanitity +  I*L*ks[n]*cos(phi_n - k_RF*z))*(zimag) + dpy) / n; // Eqn 167
+    dpy = ((Quanitity +  L*ks[n]*cos(phi_n - k_RF*z))*(zimag) + dpy) / n; // Eqn 167
 
-    dpt = ((Quanitity +  I*L*ks[n]*sin(phi_n - k_RF*z))*(zreal) + dpt) / n; // Eqn 168
+    dpt = ((Quanitity +  L*ks[n]*sin(phi_n - k_RF*z))*(zreal) + dpt) / n; // Eqn 168
 
   }
   dpt = ((q*V_RF)/(ps*c))*sin(vrf - k_RF*z) - (k_RF * dpt) ; // Eqn 168 continued 
