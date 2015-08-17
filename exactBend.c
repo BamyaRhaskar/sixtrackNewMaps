@@ -80,28 +80,27 @@ float x ( float L, float b1, float rho, float delta){
 
 } // end function x
 
-float xmomentaPrime(float px0, float L, float delta, float b1, float rho, float x, float theta){
+float xmomentaPrime( float b1, float delta, float h, float L, float px0, float rho, float x){
 
+	float theta = h*L; 
 	float pxPrime = -px0*sin(theta)*L  - b1 * (rho + x))cos(theta)*L;
 
 	return pxPrime;
 
 } // end function xmomentaPrime
 
-float y ( float y0, float delta, float theta, float rho, float b1, float py, float L){
+float y ( float b1, float delta, float h, float L, float rho, float py, float y0){
 
 	float theta = h*L; 
-
 	float y = y0 + ((py*L)/(b1*rho)) + (py/L)*(alpha(0, delta, theta, py) - alpha(L, delta, theta, py));
 
 	return y;
 
 } // end function y
 
-float ct ( float ct0, float delta, float theta, float rho, float b1, float py, float L){
+float ct ( float b1, float ct0, float delta, float h, float L, float rho, float py){
 
-	float theta = b1*L; 
-
+	float theta = h*L; 
 	float ct = ct0 + ((1 + delta)*L)/(b1*rho) + ((1+delta)/b1)*(alpha(0, delta, theta, py) - alpha(L, delta, theta, py));
 
 	return ct;
