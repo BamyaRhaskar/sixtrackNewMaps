@@ -244,6 +244,3 @@ class Cavity(namedtuple('Cavity','vn f lag scav'.split())):
         # for cogging phi is the phase when s=scav
         phase+=k*(p.s-self.scav)/p.beta0
       p.pt+=p.chi*self.vn*sin(2*pi*phase)
-
-
-track()
