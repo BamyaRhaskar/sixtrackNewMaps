@@ -20,7 +20,7 @@ float factorial(int n)
 } // end factorial
 
 
-void taylor(float x, float y, float z, float kn[], float ks[], int polySize, float L, float k_RF, float v_n, float phi_n, float q, float V_RF, float ps, float c, float vrf){
+void taylor(float x, float y, float z, float kn[], float ks[], int polySize, float L, float k_RF, float v_n, float phi_n, float q, float V_RF, float ps, float c){
 
   double dpx = 0;          
   double dpy = 0; 
