@@ -9,71 +9,41 @@
 #include "complex.h"
 
 /*
-	Lines 32 & 33 from Physics Manual
-		- Defined Quanitites
-*/
-
-float Gx(float q, float q0, float hx, float delta ){
-
-	return ( (q/q0) * pow(hx, 2) / (1 + delta) );
-
-} // end function Gx
-
-float Gy(float q, float q0, float hy, float delta){
-
-	return ( (q/q0) * pow(hy, 2) / (1 + delta) );
-
-} // end function Gy
-
-float Cxy(float G, float L){
-
-	return ( cos( sqrt(G) * L ) ) ;
-
-} // end function Cxy
-
-float Sxy(float G, float L){
-
-	return ( sin( sqrt(G) * L ) ) ;
-
-} // end function Sxy
-
-
-/*
 	Lines 44 - 49 from Physics Manual
 		- Thick Dipole Equations
 */
 
 
-float alpha( float s, float delta, float theta, float py){
+float alpha(float b1, float delta, float h, float theta, float px0, float py, float s, float x){
 
-	float alpha = arcsin( xMomenta(s, delta, theta) / sqrt((1 + delta*delta) - (py*py) ) );
+	float alpha = arcsin( xMomenta(b1, delta, h, px0, x, s) / sqrt((1 + delta*delta) - (py*py) ) );
 
 	return alpha;
 
 } // end function alpha
 
-float zMomenta( float s , float delta, float theta){
+float zMomenta( float delta, float h, float L, float py, float s){
 
-	float pz = sqrt( ((1 + delta)*(1 + delta)) - pow(xMomenta(s delta, theta), 2) - (py*py) );
+	float theta = h*L;
+	float pz = sqrt( ((1 + delta)*(1 + delta)) - pow(xMomenta(b1, delta, h, px0, x, s), 2) - (py*py) );
 
 	return pz;
 
 } // end function zMomenta
 
-float xMomenta ( float px0, float s, float delta, float b1, float rho, float x){
+float xMomenta (float b1, float delta, float h, float px0, float x, float s){
 
 	float theta = h*s; 
 
-	float px = px0*cos(theta) + (zMomenta(0, delta, theta) - b1 * (rho + x))sin(theta);
+	float px = px0*cos(theta) + (zMomenta(delta, h, L, py, s) - b1 * (rho + x))*sin(theta);
 
 	return px; 
 
 } // end function xMomenta
 
-float x ( float L, float b1, float rho, float delta){
+float x (float b1, float delta, float h, float L,  float px0, float rho, float x){
 
 	float theta = h*L;
-
 	float x = (rho/b1)*((1/rho)*zMomenta(L, delta, theta) -  xmomentaPrime(px0, L, delta, b1, rho, x, theta) - b1); 
 
 	return x; 
@@ -83,7 +53,7 @@ float x ( float L, float b1, float rho, float delta){
 float xmomentaPrime( float b1, float delta, float h, float L, float px0, float rho, float x){
 
 	float theta = h*L; 
-	float pxPrime = -px0*sin(theta)*L  - b1 * (rho + x))cos(theta)*L;
+	float pxPrime = -px0*sin(theta)*L  - b1 * (rho + x))*cos(theta)*L;
 
 	return pxPrime;
 
