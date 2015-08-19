@@ -106,23 +106,23 @@ int main(){
 	float value;
 
 	value = Px(b1, delta, h, px0, py, rho, s, x);
-	printf("Output Value for ct function: %f", value);
+	printf("Output Value for Px function: %f \n", value);
 
 	value = Pz(b1, delta, h, px0, py, rho, s, x);
-	printf("Output Value for ct function: %f", value);
+	printf("Output Value for Py function: %f \n", value);
 
 	value = alpha(b1, delta, h, px0, py, rho, s, x);
-	printf("Output Value for ct function: %f", value);
+	printf("Output Value for alpha function: %f \n", value);
 
 	value = xCoordinate(b1, delta, h, L, px0, py, rho, x);
-	printf("Output Value for ct function: %f", value);
+	printf("Output Value for xCoordinate function: %f \n", value);
 
 	value = yCoordinate(b1, delta, h, L, px0, py, rho, x, y);
-	printf("Output Value for ct function: %f", value);
+	printf("Output Value for yCoordinate function: %f \n", value);
 
 
 	value = ct(b1, ct0, delta, h, L, px0, py, rho, x);
-	printf("Output Value for ct function: %f", value);
+	printf("Output Value for ct function: %f \n", value);
 
 
 	return 0;
