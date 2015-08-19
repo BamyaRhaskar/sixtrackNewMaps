@@ -17,9 +17,9 @@
 float xMomenta (float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 
 	float theta = h*s; 
-	float zMomenta_0  = sqrt( (1 + delta*delta) - pow(px0, 2) - (py*py) ); // <- xMomenta at 0, is simply px0  
+	float zMomenta_0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) ); // <- xMomenta at 0, is simply px0  
 
-	float px = px0*cos(theta) + (zMomenta_0 - b1 * (rho + x))*sin(theta);
+	float px = px0*cos(theta) + (zMomenta_0 - (b1 * (rho + x)))*sin(theta);
 
 	return px; 
 
@@ -29,7 +29,7 @@ float xMomenta (float b1, float delta, float h, float px0, float py, float rho, 
 float zMomenta( float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 
 	float theta = h*s;
-	float pz = sqrt( (1 + delta*delta) - pow(xMomenta(b1, delta, h, px0, py, rho, s, x), 2) - (py*py) );
+	float pz = sqrt( (1 + delta)*(1 + delta) - pow(xMomenta(b1, delta, h, px0, py, rho, s, x), 2) - (py*py) );
 
 	return pz;
 
