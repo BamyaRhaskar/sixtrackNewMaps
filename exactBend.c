@@ -66,25 +66,22 @@ float xCoordinate (float b1, float delta, float h, float L, float px0, float py,
 } // end function xCoordinate
 
 
+float y (float b1, float delta, float h, float L, float px0, float py, float rho, float x, float y0){
 
-// float y ( float b1, float delta, float h, float L, float rho, float py, float y0){
+	float y = y0 + ( (py*L)/(b1*rho) ) + (py/L)*(alpha(b1, delta, h, px0, py, rho, 0, x) - alpha(b1, delta, h, px0, py, rho, L, x));
 
-// 	float theta = h*L; 
-// 	float y = y0 + ((py*L)/(b1*rho)) + (py/L)*(alpha(0, delta, theta, py) - alpha(L, delta, theta, py));
+	return y;
 
-// 	return y;
+} // end function y
 
-// } // end function y
+float ct (float b1, float ct0, float delta, float h, float L, float px0, float py, float rho, float x, float y0){
 
-// float ct ( float b1, float ct0, float delta, float h, float L, float rho, float py){
+	float ct = ct0 + ((1 + delta)*L/(b1*rho)) + ((1+delta)/b1)*(alpha(b1, delta, h, px0, py, rho, 0, x) - alpha(b1, delta, h, px0, py, rho, L, x));
 
-// 	float theta = h*L; 
-// 	float ct = ct0 + ((1 + delta)*L)/(b1*rho) + ((1+delta)/b1)*(alpha(0, delta, theta, py) - alpha(L, delta, theta, py));
-
-// 	return ct;
+	return ct;
 
 
-// } // end function ct
+} // end function ct
 
 
 int main(){
@@ -103,6 +100,10 @@ int main(){
 	float Bx = 0;
 
 	float b1 = (q0 / P0) * By; 
+
+	float value;
+
+	// value = ct(b1, ct0, delta, h, L, px0, py, rho, x, float y0)
 
 
 	return 0;
