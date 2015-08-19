@@ -13,15 +13,6 @@
 		- Thick Dipole Equations
 */
 
-float zMomenta_0( float b1, float delta, float h, float px0, float py, float rho, float x){
-
-	// float xMomenta_0 = px0; <- xMomenta at 0, is simple px0  
-
-	float pz = sqrt( (1 + delta*delta) - pow(px0, 2) - (py*py) );
-
-	return pz;
-
-} // end function zMomenta
 
 float xMomenta (float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 
