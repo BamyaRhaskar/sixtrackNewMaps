@@ -14,53 +14,58 @@
 */
 
 
-float xMomenta (float b1, float delta, float h, float px0, float py, float rho, float s, float x){
+float Px (float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 
 	float theta = h*s; 
-	float zMomenta_0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) ); // <- xMomenta at 0, is simply px0  
+	float Pz_at0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) ); // <- Px at 0, is simply px0  
 
-	float px = px0*cos(theta) + (zMomenta_0 - (b1 * (rho + x)))*sin(theta);
+	float xMomenta = px0*cos(theta) + (Pz_at0 - (b1 * (rho + x)))*sin(theta);
 
-	return px; 
+	return xMomenta; 
 
-} // end function xMomenta
+} // end function Px
 
 
-float zMomenta( float b1, float delta, float h, float px0, float py, float rho, float s, float x){
+float Pz( float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 
 	float theta = h*s;
-	float pz = sqrt( (1 + delta)*(1 + delta) - pow(xMomenta(b1, delta, h, px0, py, rho, s, x), 2) - (py*py) );
+	float zMomenta = sqrt( (1 + delta)*(1 + delta) - pow(Px(b1, delta, h, px0, py, rho, s, x), 2) - (py*py) );
 
-	return pz;
+	return zMomenta;
 
-} // end function zMomenta
+} // end function Pz
 
 
 float alpha(float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 
-	float alpha = asin( xMomenta(b1, delta, h, px0, py, rho, s, x) / sqrt((1 + delta*delta) - (py*py) ) );
+	float alpha = asin( Px(b1, delta, h, px0, py, rho, s, x) / sqrt((1 + delta*delta) - (py*py) ) );
 
 	return alpha;
 
 } // end function alpha
 
-// float x (float b1, float delta, float h, float L,  float px0, float rho, float x){
+float PxPrime( float b1, float delta, float h, float L, float px0, float py, float rho, float x){
 
-// 	float theta = h*L;
-// 	float x = (rho/b1)*((1/rho)*zMomenta(L, delta, theta) -  xmomentaPrime(px0, L, delta, b1, rho, x, theta) - b1); 
+	float theta = h*L; 
+	float zMomenta_0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) );
 
-// 	return x; 
+	float PxPrime = -px0*sin(theta)*L + (zMomenta_0 - (b1 * (rho + x)))*cos(theta)*L;
 
-// } // end function x
+	return PxPrime;
 
-// float xmomentaPrime( float b1, float delta, float h, float L, float px0, float rho, float x){
+} // end function xmomentaPrime
 
-// 	float theta = h*L; 
-// 	float pxPrime = -px0*sin(theta)*L  - b1 * (rho + x))*cos(theta)*L;
 
-// 	return pxPrime;
+float xCoordinate (float b1, float delta, float h, float L, float px0, float py, float rho, float x){
 
-// } // end function xmomentaPrime
+	float theta = h*L;
+	float xCoordinate = (rho/b1) * ( ((1/rho) * Pz(b1, delta, h, px0, py, rho, L, x)) -  PxPrime(b1, delta, h, L, px0, py, rho, x) - b1); 
+
+	return xCoordinate; 
+
+} // end function xCoordinate
+
+
 
 // float y ( float b1, float delta, float h, float L, float rho, float py, float y0){
 
