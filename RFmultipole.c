@@ -1,12 +1,13 @@
-/*  Implementing RF multipole, version 2
-
-    - Referencing Equations 166 - 168 from the revised Physics Manual
-      Minimized prior script of three seperate functions 
+/*  Implementing RF Multipole, Equations 166-168 in SixTrack Physics Manual (Revised version)
+Author: Ramya Bhaskar 8/21/2015
+    - Minimized prior script of three seperate functions 
       into one function.
     - Avoiding use of factorial function.
     - Avoiding use of complex data type, to ease porting to opencl.
     - No errors or warnings generated.
     - Compile with command: gcc -o RFmultipole RFmultipole.c
+
+      - Current program conflicting with python benchmark program
 */
 
 #include <stdio.h>
@@ -22,7 +23,8 @@ float factorial(int n)
 
 
 void taylor(float x, float y, float z, float kn[], float ks[], int polySize, float L, float k_RF, float v_n, float phi_n, float q, float V_RF, float ps, float c){
-
+  // Variable Initializations 
+  /*---------------------------*/
   double dpx = 0;          
   double dpy = 0; 
   double dpt = 0;
