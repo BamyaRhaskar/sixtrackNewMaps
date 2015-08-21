@@ -1,2 +1,3 @@
-import benchmark.py
+import benchmark
 
+x = Multipole.track(Bunch(), )

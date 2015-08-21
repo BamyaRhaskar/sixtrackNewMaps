@@ -1,11 +1,12 @@
 /*  Implementing RF multipole, version 2
 
-    -Referencing Equations 166 - 168 from the revised Physics Manual
+    - Referencing Equations 166 - 168 from the revised Physics Manual
       Minimized prior script of three seperate functions 
       into one function.
-    -No erros or warnings generated during compilation.
-    -Avoiding use of factorial function.
-    -Avoiding use of complex data type, to ease porting to opencl.
+    - Avoiding use of factorial function.
+    - Avoiding use of complex data type, to ease porting to opencl.
+    - No errors or warnings generated.
+    - Compile with command: gcc -o RFmultipole RFmultipole.c
 */
 
 #include <stdio.h>
@@ -29,20 +30,18 @@ void taylor(float x, float y, float z, float kn[], float ks[], int polySize, flo
   float zimag = 0;
   float Quanitity =  0;
 
-  for (int n = polySize; n >= 0 ; n--){ 
+  for (int n = polySize; n > 0 ; n--){ 
 
     Quanitity = kn[n-1] * L * cos(v_n - k_RF*z); // real-valued portion of each Eqn, 166-168
     zreal = pow( dpx*x - dpy*y, n); // real-valued portion of z
     zimag = pow( dpx*y + dpy*x, n); // complex-valued portion of z
 
     dpx = -((Quanitity +  L*ks[n]*cos(phi_n - k_RF*z))*(zreal)  + dpx) /n; // Eqn 166
-
     dpy = ((Quanitity +  L*ks[n]*cos(phi_n - k_RF*z))*(zimag) + dpy) / n; // Eqn 167
-
     dpt = ((Quanitity +  L*ks[n]*sin(phi_n - k_RF*z))*(zreal) + dpt) / n; // Eqn 168
 
   }
-  dpt = ((q*V_RF)/(ps*c))*sin(vrf - k_RF*z) - (k_RF * dpt) ; // Eqn 168 continued 
+  dpt = ((q*V_RF)/(ps*c))*sin(0 - k_RF*z) - (k_RF * dpt) ; // Eqn 168 continued 
 
   double deltapx = (dpx);
   double deltapy = (dpy);
@@ -58,9 +57,9 @@ int main()
   float x = 1; 
   float y = 1;
   float z = 1;
-  float K_Nn[5] = {4,3,2,1,0};
-  float K_Sn[5] = {4,3,2,1,0};
-  float polynomialMax = 5;
+  float K_Nn[3] = {3,2,1};
+  float K_Sn[3] = {5,3,2};
+  float polynomialMax = 3;
   float L = 1; 
   float k_RF = 1;
   float v_n = 1; 
@@ -68,10 +67,10 @@ int main()
   float q = 1;
   float V_RF = 1;
   float ps = 1;
-  float c = 1;
+  float c = 299792458; // light speed
   float vrf = 1;
 
-  taylor(x, y, z, K_Nn, K_Sn, polynomialMax, L, k_RF, v_n, phi_n, q, V_RF, ps, c, vrf);
+  taylor(x, y, z, K_Nn, K_Sn, polynomialMax, L, k_RF, v_n, phi_n, q, V_RF, ps, c);
 
 
   return 0;  
