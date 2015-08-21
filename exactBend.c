@@ -29,12 +29,12 @@
 
 */
 
+void exactBend(float b1, float ct0, float delta, float h, float L, float px0, float py, float rho, float x, float y){
 
-float Px(float b1, float delta, float h, float px0, float py, float rho, float s, float x){
 	/* Within this function, the math is not explicit. 
 	   First we set the Bending Angle theta.
 	*/
-	float theta = h*s; // Bending Angle
+	float theta = h*L; // Bending Angle
 
 	/* Then, from Equation 45, then jumping down to 47, 
 	   we see that value of Z Momenta at Length 0 must 
@@ -48,73 +48,51 @@ float Px(float b1, float delta, float h, float px0, float py, float rho, float s
 	float Pz_at0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) );  // Z Momenta at set length s = 0 
 	float Px = px0*cos(theta) + (Pz_at0 - (b1 * (rho + x)))*sin(theta); 
 	// ^^^ Final X Momenta at later time del-t
+	// end function Px (X Momenta, Equation 47)
 
-	return Px; 
+	/* 
+	   RESETTING: px0 to newly calculated Px, from the above ^^^
+	*/
+	
+	// px0 = Px;
 
-} // end function Px (X Momenta, Equation 47)
-
-
-float Pz(float b1, float delta, float h, float px0, float py, float rho, float s, float x){
-
-	float theta = h*s; // Bending Angle
-	float Pz = sqrt( (1 + delta)*(1 + delta) - pow(Px(b1, delta, h, px0, py, rho, s, x), 2) - (py*py) ); 
+	
+	float Pz = sqrt( (1 + delta)*(1 + delta) - (Px*Px) - (py*py) ); 
 	// ^^^ Final Z Momenta at later time del-t
-
-	return Pz;
-
-} // end function Pz (Z Momenta, Equation 45)
+	// end function Pz (Z Momenta, Equation 45)
 
 
-float alpha(float b1, float delta, float h, float px0, float py, float rho, float s, float x){
-
-	float alpha = asin( Px(b1, delta, h, px0, py, rho, s, x) / sqrt((1 + delta*delta) - (py*py) ) );
+	float alpha = asin( Px / sqrt((1 + delta*delta) - (py*py) ) );
 	// ^^^ Final alpha at later time del-t
+	// end function alpha (Alpha, Euqation 44)
 
-	return alpha;
-
-} // end function alpha (Alpha, Euqation 44)
-
-float PxPrime(float b1, float delta, float h, float L, float px0, float py, float rho, float x){
-
-	float theta = h*L; // Bending Angle
-	float Pz_at0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) ); // Z Momenta at set length s = 0 
+	/* 
+	   Commented below calculation out, since original value of Pz_at0 changes now that px0 = Px
+	*/
+	// float Pz_at0  = sqrt( (1 + delta)*(1 + delta) - (px0*px0) - (py*py) ); // Z Momenta at set length s = 0 
+	
 	float PxPrime = -px0*sin(theta)*L + (Pz_at0 - (b1 * (rho + x)))*cos(theta)*L;
 	// ^^^ Final PxPrime at later time del-t
-
-	return PxPrime;
-
-} // end function PxPrime (X Acceleration, not explicit in Manual)
+	// end function PxPrime (X Acceleration, not explicit in Manual)
 
 
-float xCoordinate(float b1, float delta, float h, float L, float px0, float py, float rho, float x){
-
-	float theta = h*L; // Bending Angle
-	float xCoordinate = (rho/b1) * ( ((1/rho) * Pz(b1, delta, h, px0, py, rho, L, x)) -  
-		PxPrime(b1, delta, h, L, px0, py, rho, x) - b1); 
+	float xCoordinate = (rho/b1) * ((1/rho)*Pz -  PxPrime - b1);  
+																						//(b1, h, L, px0, py, rho, x) 
 	// ^^^ Final X Position at later time del-t
-
-	return xCoordinate; 
-
-} // end function xCoordinate (X Position, Equation 46)
+	// end function xCoordinate (X Position, Equation 46)
 
 
-float yCoordinate(float b1, float delta, float h, float L, float px0, float py, float rho, float x, float y){
-
-	float yCoordinate = y + ( (py*L)/(b1*rho) ) + (py/L)*(alpha(b1, delta, h, px0, py, rho, 0, x) - 
-		alpha(b1, delta, h, px0, py, rho, L, x));
+	float alpha_at0 = asin( px0 / sqrt((1 + delta*delta) - (py*py) ) ); // when 0 is passed into alpha, only px0 remains from Px
+	float yCoordinate = y + ( (py*L)/(b1*rho) ) + (py/L)*(alpha_at0 - alpha); // alpha is implicitly understood to be at s/L
 	// ^^^ Final Y Position at later time del-t
+	// end function yCoordinate (Y Position, Equation 48)
 
-	return yCoordinate;
 
-} // end function yCoordinate (Y Position, Equation 48)
-
-float ct(float b1, float ct0, float delta, float h, float L, float px0, float py, float rho, float x){
-
-	float ct = ct0 + ((1 + delta)*L/(b1*rho)) + ((1+delta)/b1)*(alpha(b1, delta, h, px0, py, rho, 0, x) - 
-		alpha(b1, delta, h, px0, py, rho, L, x));
+	float ct = ct0 + ((1 + delta)*L/(b1*rho)) + ((1+delta)/b1)*(alpha_at0 - alpha);
 	// ^^^ Final ct at later time del-t
+	// end function ct (Equation 49)
 
-	return ct;
+	 printf("(Theta: %f,\nPz at 0: %f ,\nPx: %f,\nPz: %f,\nalpha: %f,\nPxPrime: %f,\nxCoordinate: %f,\nyCoordinate: %f,\nct: %f ) ", theta, Pz_at0, Px, Pz, alpha, PxPrime, xCoordinate, yCoordinate, ct);
 
 
 } // end function ct (Equation 49)
@@ -145,23 +123,9 @@ int main(){
 
 	// Function Calls & Outputs
 	/*---------------------------*/
-	value = Px(b1, delta, h, px0, py, rho, s, x);
-	printf("Output Value for Px function: %f \n", value);
+	
+	exactBend( b1,  ct0,  delta,  h,  L,  px0,  py,  rho,  x,  y);
 
-	value = Pz(b1, delta, h, px0, py, rho, s, x);
-	printf("Output Value for Py function: %f \n", value);
-
-	value = alpha(b1, delta, h, px0, py, rho, s, x);
-	printf("Output Value for alpha function: %f \n", value);
-
-	value = xCoordinate(b1, delta, h, L, px0, py, rho, x);
-	printf("Output Value for xCoordinate function: %f \n", value);
-
-	value = yCoordinate(b1, delta, h, L, px0, py, rho, x, y);
-	printf("Output Value for yCoordinate function: %f \n", value);
-
-	value = ct(b1, ct0, delta, h, L, px0, py, rho, x);
-	printf("Output Value for ct function: %f \n", value);
 
 
 	return 0;

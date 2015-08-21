@@ -61,11 +61,11 @@ int main()
   float K_Sn[3] = {5,3,2};
   float polynomialMax = 3;
   float L = 1; 
-  float k_RF = 1;
+  float k_RF = 0;
   float v_n = 1; 
-  float phi_n = 1;
+  float phi_n = 0;
   float q = 1;
-  float V_RF = 1;
+  float V_RF = 0;
   float ps = 1;
   float c = 299792458; // light speed
   float vrf = 1;
