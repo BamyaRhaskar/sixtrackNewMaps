@@ -6,6 +6,8 @@ Current Status as of 12:00pm, Pacific Time Zone (UTC-08:00) on August 21, 2015:
 	-Currently, maps implemented in C so far are: Radio Frequency (RF) Multipole, Exact Bend, and Thick Dipole.
 	
 	-Benchmark programs available for RF Multipole. Exact Bend and Thick Dipole are to be developed. 
+
+	-Porting into Fortran and/or OpenCL to be resolved later. 
 	
 	-There is an obsolete folder, where different versions of the final scripts can be viewed. These
 	 versions have not been benchmarked, unless indicated within the comments of that version.
