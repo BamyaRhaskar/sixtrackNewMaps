@@ -98,7 +98,8 @@ void exactBend(float b1, float ct0, float delta, float h, float L, float px0, fl
 } // end function ct (Equation 49)
 
 
-int main(){
+int main()
+{
 	// Variable Initializations 
 	/*---------------------------*/
 	float ct0 = 1;

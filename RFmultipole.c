@@ -45,9 +45,9 @@ void taylor(float x, float y, float z, float kn[], float ks[], int polySize, flo
        the quantity of concern is divided multiplied by: (1/1)...(1/(n-1))*(1/n).
     */
 
-    dpx = -((Quanitity +  L*ks[n]*cos(phi_n - k_RF*z))*(zreal)  + dpx) /n; // Equation 166
-    dpy = ((Quanitity +  L*ks[n]*cos(phi_n - k_RF*z))*(zimag) + dpy) / n; // Equation 167
-    dpt = ((Quanitity +  L*ks[n]*sin(phi_n - k_RF*z))*(zreal) + dpt) / n; // Equation 168
+    dpx = (1+ dpx) /n; // Equation 166
+    dpy = (1 + dpy) / n; // Equation 167
+    dpt = (1 + dpt) / n; // Equation 168
 
   }
 
@@ -65,9 +65,11 @@ int main()
     float x = 1; 
     float y = 1;
     float z = 1;
-    float K_Nn[3] = {3,2,1};
-    float K_Sn[3] = {5,3,2};
-    float polynomialMax = 3;
+
+    int polynomialMax = 4;
+    float K_Nn[4] = {4,3,2,1};
+    float K_Sn[4] = {4,3,2,1};
+    
     float L = 1; 
     float k_RF = 0;
     float v_n = 1; 
