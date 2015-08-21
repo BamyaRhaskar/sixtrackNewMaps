@@ -1,4 +1,5 @@
 /*  Implementing Exact Bend, Equations 44-49 in SixTrack Physics Manual (Revised version)
+Author: Ramya Bhaskar 8/21/2015
 	- Instructions were to derive eq.45, knowing that theta is h*L.
 	- No errors or warnings generated.
 	- Compile with command: gcc -o exactBend exactBend.c
