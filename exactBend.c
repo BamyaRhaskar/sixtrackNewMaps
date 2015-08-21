@@ -52,10 +52,10 @@ void exactBend(float b1, float ct0, float delta, float h, float L, float px0, fl
 	// end function Px (X Momenta, Equation 47)
 
 	/* 
-	   RESETTING: px0 to newly calculated Px, from the above ^^^
-	*/
+	RESETTING: px0 to newly calculated Px, from the above ^^^
 	
-	// px0 = Px;
+	px0 = Px; <- did not implement in the end. left this here for records purposes. 
+	*/
 
 	
 	float Pz = sqrt( (1 + delta)*(1 + delta) - (Px*Px) - (py*py) ); 
@@ -100,7 +100,6 @@ void exactBend(float b1, float ct0, float delta, float h, float L, float px0, fl
 
 
 int main(){
-
 	// Variable Initializations 
 	/*---------------------------*/
 	float ct0 = 1;
@@ -124,10 +123,13 @@ int main(){
 
 	// Function Calls & Outputs
 	/*---------------------------*/
-	
 	exactBend( b1,  ct0,  delta,  h,  L,  px0,  py,  rho,  x,  y);
-
 
 
 	return 0;
 }
+
+
+
+
+
