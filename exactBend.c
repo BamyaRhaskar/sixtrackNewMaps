@@ -8,7 +8,6 @@ Author: Ramya Bhaskar 8/21/2015
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "complex.h"
 
 /*
 	Lines 44 - 49 from Physics Manual implemented below
@@ -127,7 +126,7 @@ int main(){
 
 
 	return 0;
-}
+} // end function main
 
 
 
