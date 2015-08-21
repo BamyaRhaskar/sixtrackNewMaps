@@ -20,3 +20,7 @@ All maps reference the Sixtrack Physics Manual which can be found at:
 	
 	https://sixtrack.web.cern.ch/SixTrack/
 
+A link to the github repository containing all files:
+
+	https://github.com/BamyaRhaskar/sixtrackNewMaps
+
