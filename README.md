@@ -3,7 +3,7 @@ New maps to be implemented in SixTrack. Versions in this repository are to be in
 
 Current Status as of 12:00pm, Pacific Time Zone (UTC-08:00) on August 21, 2015:
 	
-	-Currently, maps implemented in C so far are: RFmultipole, Exact Bend, and Thick Dipole.
+	-Currently, maps implemented in C so far are: Radio Frequency (RF) Multipole, Exact Bend, and Thick Dipole.
 	
 	-Benchmark programs available for RF Multipole. Exact Bend and Thick Dipole are to be developed. 
 	
