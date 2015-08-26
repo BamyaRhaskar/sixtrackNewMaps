@@ -1,8 +1,7 @@
+# from sixtracklib.ctrack import *
 from collections import namedtuple
 from copy import deepcopy
-
 import numpy as np
-
 class Bunch(object):
   clight=299792458
   pi=3.141592653589793238
@@ -173,8 +172,6 @@ class Bunch(object):
     for nn in 'mratio qratio chi'.split():
       out.append('%-7s = %s'%(nn,getattr(self,nn)))
     return '\n'.join(out)
-
-
 def ctaylor(x,y,kn,ks):
   dpx=kn[-1]
   dpy=ks[-1]
@@ -183,7 +180,6 @@ def ctaylor(x,y,kn,ks):
     dpx=kkn+(dpx*x-dpy*y)/float(nn)
     dpy=kks+(dpx*y+dpy*x)/float(nn)
   return dpx,dpy
-
 # def pprint(p):
 #   res=0
 #   out=[]
@@ -205,7 +201,6 @@ def ctaylor(x,y,kn,ks):
 #             partf[index] = float(value)
 #   var = libtrack.print_comp(partf)
 #   return res,out
-
 class Drift(namedtuple('Drift',['l'])):
     def track(self,p):
         l=self.l
@@ -222,7 +217,6 @@ class Drift(namedtuple('Drift',['l'])):
         p.s+=l
         print "p p.s: %23.16e\n"%(p.s)
         # pprint(p,p)
-
 class DriftExact(namedtuple('Drift',['l'])):
     def track(self,p):
         sqrt=p._m.sqrt
@@ -237,9 +231,9 @@ class DriftExact(namedtuple('Drift',['l'])):
         p.tau+=l/beta0-bzi
         p.s+=l
         # pprint(p,p)
-
 class Multipole(namedtuple('Multipole','knl ksl hxl hyl l rel'.split())):
     def track(self,p):
+        # print "py multipole"
         kn=self.knl; ks=self.ksl
         # if relative order is defined 0->obsolute k
         if self.rel>0:
@@ -261,6 +255,7 @@ class Multipole(namedtuple('Multipole','knl ksl hxl hyl l rel'.split())):
         # curvature effect kick
         l=self.l
         if l!=0:
+          betai=(1/p.beta0+p.pt)/(1+p.delta)
           b1l=chi*kn[0]; a1l=chi*ks[0]
           hxl=self.hxl ;  hyl=self.hyl
           hxx=hxl/l*x; hyy=hyl/l*y; delta=p.delta
@@ -268,8 +263,7 @@ class Multipole(namedtuple('Multipole','knl ksl hxl hyl l rel'.split())):
           dpy-=hyl + hyl*delta - a1l*hyy
           p.tau-=chi*(hxx-hyy)*l*betai
         p.px+=dpx ;  p.py+=dpy
-
-
+        # pprint(p,p)
 class Cavity(namedtuple('Cavity','vn f lag scav'.split())):
     def track(self,p):
       sin=p._m.sin
@@ -281,8 +275,6 @@ class Cavity(namedtuple('Cavity','vn f lag scav'.split())):
         phase+=k*(p.s-self.scav)/p.beta0
       p.pt+=p.chi*self.vn*sin(phase)
       # pprint(p,p)
-
-
 class Align(namedtuple('Align','dx dy tilt'.split())):
     def track(self,p):
       sin=p._m.sin
@@ -303,11 +295,7 @@ class Align(namedtuple('Align','dx dy tilt'.split())):
       # print "p pxn: %23.16e\np pyn: %23.16e\n"%(pxn,pyn)
       p.px=pxn;p.py=pyn;
       # pprint(p,p)
-
-
 class Block(namedtuple('Block','elems'.split())):
     def track(self,p):
         for el in self.elems:
             el.track(p)
-
-
